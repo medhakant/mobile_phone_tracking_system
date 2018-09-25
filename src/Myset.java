@@ -40,7 +40,7 @@ public class Myset {
 
     }
 
-    public void Delete(Object o) throws  Exception{
+    public void Delete(Object o){
         try {
             LinkedList.Node nrear = llist.head;
             LinkedList.Node nfront = nrear.next;
@@ -57,8 +57,7 @@ public class Myset {
                 nfront=nfront.next;
                 nrear=nrear.next;
             }
-            if (nfront==null)
-                throw new Exception("Exception: Object not in MySet");
+
         }catch(NullPointerException e) {}
     }
 

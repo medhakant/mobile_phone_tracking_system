@@ -33,11 +33,12 @@ public class MobilePhone {
     }
 
 //stores the location of the base stastion to which the mobile phone is connected
-    public ExchangeList.Exchange location() throws Exception{
+    public ExchangeList.Exchange location(){
         if (status==true)
             return this.exchange;
         else
-            throw new Exception("Mobile Phone Unreacheable");
+            System.out.println("Unreachable");
+            return null;
 
     }
 

@@ -5,7 +5,7 @@ public class ExchangeList {
     public static Exchange head;  // head of exchangeList , the pointer to first exchange
 
 //This method inserts a Exchange "b" in the exchange list and makes "a" it's parent and in case there is no exchange "a" , it throws an exception
-    public void Insert(ExchangeList.Exchange a,ExchangeList.Exchange b) throws Exception{
+    public void Insert(ExchangeList.Exchange a,ExchangeList.Exchange b){
         if (IsMember(a)){
             ExchangeList.Exchange n = this.head;
             while (n.next!=null){
@@ -16,9 +16,19 @@ public class ExchangeList {
 
             return;
         }
-        else
-            throw new Exception("No Exchange with Identifier a");
+    }
 
+    public void Insert(ExchangeList.Exchange a){
+            ExchangeList.Exchange n = this.head;
+            if (n==null)
+                head=a;
+            else{
+                while (n.next!=null){
+                    n=n.next;
+                }
+                n.next = a;
+            }
+            return;
     }
 
 
@@ -58,7 +68,7 @@ public class ExchangeList {
         }
 
 //returns the no. of children of the exchange
-        public int numChildren() throws Exception{
+        public int numChildren(){
             int i=0;
             ExchangeList.Exchange n = head;
             if(n!=null){
@@ -80,9 +90,23 @@ public class ExchangeList {
 
         }
 
+        public boolean isChild(ExchangeList.Exchange x){
+            if (this.numChildren()==0)
+                return false;
+            else if (this.numChildren()>0){
+                for(int i=0;i<this.numChildren();i++){
+                    if (this.child(i).uid==x.uid)
+                        return true;
+                }
+            }
+
+            return false;
+
+        }
+
 
 //returns the "i"th child of the exchange and in case the "i"th child doesn't exists ,it throws an exception        
-        public Exchange child(int i) throws Exception{
+        public Exchange child(int i){
             ExchangeList.Exchange n = head;
             while (n.uid !=this.uid){
                 n=n.next;
@@ -96,8 +120,6 @@ public class ExchangeList {
                 if (i>=0)
                     n =n.next;
             }
-            if (n==null && i>=0)
-                throw new Exception("Not so many child");
             return n;
         }
 
@@ -110,7 +132,7 @@ public class ExchangeList {
         }
 
 //returns the subtree corresponding to it's "i"th child
-        public RoutingMapTree subtree(int i) throws Exception{
+        public RoutingMapTree subtree(int i){
             RoutingMapTree subTree = new RoutingMapTree();
             subTree.root = child(i);
             subTree.phoneSet = child(i).residentSet();
@@ -120,6 +142,16 @@ public class ExchangeList {
         public MobilePhoneSet residentSet(){
             return this.residentPhoneSet;
         }
+    }
+
+    public static void main(String[] args) throws Exception{
+        ExchangeList a =new ExchangeList();
+        a.head = new Exchange(0);
+        a.Insert(head,new Exchange(1));
+        a.Insert(head,new Exchange(2));
+        a.Insert(head,new Exchange(3));
+        System.out.println(head.numChildren());
+
     }
 
 
